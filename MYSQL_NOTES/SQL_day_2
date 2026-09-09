@@ -1,0 +1,134 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use pf6;
+ERROR 1049 (42000): Unknown database 'pf6'
+mysql> use pfs6
+Database changed
+mysql> drop database pfs6;
+Query OK, 3 rows affected (0.09 sec)
+
+mysql> create database da6;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use da6;
+Database changed
+mysql> CREATE TABLE STUDENTS();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> CREATE TABLE STUDENTS(
+    -> SNO INT PRIMARY KEY,
+    -> SNAME VARCHAR(30),
+    -> SEMAIL VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO STUDENTS VALUES(111,"NANI","NANI@CODEGNAN");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM STUDENTS;
++-----+-------+---------------+
+| SNO | SNAME | SEMAIL        |
++-----+-------+---------------+
+| 111 | NANI  | NANI@CODEGNAN |
++-----+-------+---------------+
+1 row in set (0.02 sec)
+
+mysql> CREATE USER MUNNA IDENTIFIED BY "MUNNA143";
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE USER CHINNA INDENTIFIED BY "CHINNA123";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INDENTIFIED BY "CHINNA123"' at line 1
+mysql> CREATE USER CHINNA IDENTIFIED BY "CHINNA123";
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT,INSERT,UPDATE ON STUDENTS TO MUNNA;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> GRANT SELECT,DROP ON STUDENTS TO CHINNA;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE INSERT,UPDATE ON STUDENTS FROM MUNNA;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> REVOKE SELECT ON STUDENTS FROM CHINNA;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE EMP(
+    -> EMPID INT PRIMARY KEY,
+    -> ENAME VARCHAR(20),
+    -> ESAL DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO EMP(ENAME,ESAL) VALUES("MAHI",20000);
+ERROR 1364 (HY000): Field 'EMPID' doesn't have a default value
+mysql> CREATE TABLE EMPLOYEES(
+    -> ^C
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCT_NAME VARCHAR(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCT_NAME VARCHAR(20),
+    -> PRODUCT_PRICE DECIMAL(10,2),
+    -> PRODUCT_ID INT PRIMARY KEY,
+    -> PRODUCT_QUANTITY INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT * FROM PRODUCTS;
+Empty set (0.01 sec)
+
+mysql> DEC PRODUCTS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEC PRODUCTS' at line 1
+mysql> DESC PRODUCTS;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| PRODUCT_NAME     | varchar(20)   | YES  |     | NULL    |       |
+| PRODUCT_PRICE    | decimal(10,2) | YES  |     | NULL    |       |
+| PRODUCT_ID       | int           | NO   | PRI | NULL    |       |
+| PRODUCT_QUANTITY | int           | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> INSERT INTO PRODUCTS(PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_QUANTITY) VALUES ("BIRIYANI",250.00,2);
+ERROR 1364 (HY000): Field 'PRODUCT_ID' doesn't have a default value
+mysql> INSERT INTO PRODUCTS(PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_QUANTITY,PRODUCT_ID) VALUES ("BIRIYANI",250.00,2,1);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM PRODUCTS;
++--------------+---------------+------------+------------------+
+| PRODUCT_NAME | PRODUCT_PRICE | PRODUCT_ID | PRODUCT_QUANTITY |
++--------------+---------------+------------+------------------+
+| BIRIYANI     |        250.00 |          1 |                2 |
++--------------+---------------+------------+------------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE PRODUCTS;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> TOTALAMOUNT DECIMAL(10,2)GENERATED AS (PRODUCT_PRICE * PRODUCT_QUANTITY);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TOTALAMOUNT DECIMAL(10,2)GENERATED AS (PRODUCT_PRICE * PRODUCT_QUANTITY)' at line 1
+mysql> ALTER TABLE PRODUCTS
+    -> ADD COLUMN TOTALAMOUNT DECIMAL(10,2)
+    -> GENERATED ALWAYS AS (PRODUCT_PRICE * PRODUCT_QUANTITY) STORED;
+Query OK, 1 row affected (0.07 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PRODUCTS;
++--------------+---------------+------------+------------------+-------------+
+| PRODUCT_NAME | PRODUCT_PRICE | PRODUCT_ID | PRODUCT_QUANTITY | TOTALAMOUNT |
++--------------+---------------+------------+------------------+-------------+
+| BIRIYANI     |        250.00 |          1 |                2 |      500.00 |
++--------------+---------------+------------+------------------+-------------+
+1 row in set (0.01 sec)
