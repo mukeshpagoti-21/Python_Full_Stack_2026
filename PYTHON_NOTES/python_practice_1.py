@@ -41,22 +41,28 @@ else:
 print("smallest number",min(numbers))
 print("largest number",max(numbers))
 print("total sum",sum(numbers))
-'''
 
+#03
 numbers = [10, 15, 20, 25, 30, 35] 
+#Create two empty lists named even and odd. 
 even_ = []
 odd_ = []
+#Use a loop to examine every number in the original list. 
 for num  in numbers:
+#Use a condition with the remainder operator (%) to identify even and odd numbers
     if num % 2 == 0:
+#Add each number to the correct list using append(). 
         even_.append(num)
     else:
         odd_.append(num)
+#Use slicing to display the first three and last three values. 
 print("first three",numbers[:3])
 print("last three",numbers[-3:])
+#Create a backup of the original list using copy(). 
 f = numbers.copy()
+#Empty the original list using clear(), then display both the original and backup lists. 
 numbers.clear()
 print("original list",numbers)
 print("backup list",f)
-
-
+'''
    
