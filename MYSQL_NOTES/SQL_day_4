@@ -1,0 +1,786 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use da6;;
+Database changed
+
+mysql> show tables;;
++---------------+
+| Tables_in_da6 |
++---------------+
+| emp           |
+| employees     |
+| products      |
+| studentscores |
++---------------+
+4 rows in set (0.04 sec)
+
+ERROR:
+No query specified
+
+mysql> select * from employees;
++------+---------------+------------+--------+----------+
+| id   | name          | department | salary | isactive |
++------+---------------+------------+--------+----------+
+|    1 | Rahul Sharma  | IT         |  50000 |        1 |
+|    2 | Priya Reddy   | HR         |  30000 |        1 |
+|    3 | Amit Kumar    | Finance    |  45000 |        0 |
+|    4 | Sneha Patel   | IT         |  35000 |        1 |
+|    5 | Vikram Singh  | Finance    |  28000 |        1 |
+|    6 | Anjali Mehta  | HR         |  32000 |        0 |
+|    7 | Kiran Rao     | IT         |  60000 |        1 |
+|    8 | Pooja Verma   | Marketing  |  27000 |        1 |
+|    9 | Ramesh Naidu  | Sales      |  38000 |        1 |
+|   10 | Deepika Joshi | Finance    |  52000 |        1 |
+|   11 | Suresh Babu   | Marketing  |  29000 |        0 |
+|   12 | Neha Kapoor   | HR         |  41000 |        1 |
+|   13 | Arjun Reddy   | IT         |  55000 |        0 |
+|   14 | Lakshmi Devi  | Sales      |  33000 |        1 |
+|   15 | Nikhil Jain   | IT         |  47000 |        1 |
++------+---------------+------------+--------+----------+
+15 rows in set (0.03 sec)
+
+mysql> delete where employees from finance;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where employees from finance' at line 1
+mysql> delete where employees  department=finance ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where employees  department=finance' at line 1
+mysql> delete from employees where department = "finance" or salary < 35000;
+Query OK, 8 rows affected (0.03 sec)
+
+mysql> select * from employees;
++------+--------------+------------+--------+----------+
+| id   | name         | department | salary | isactive |
++------+--------------+------------+--------+----------+
+|    1 | Rahul Sharma | IT         |  50000 |        1 |
+|    4 | Sneha Patel  | IT         |  35000 |        1 |
+|    7 | Kiran Rao    | IT         |  60000 |        1 |
+|    9 | Ramesh Naidu | Sales      |  38000 |        1 |
+|   12 | Neha Kapoor  | HR         |  41000 |        1 |
+|   13 | Arjun Reddy  | IT         |  55000 |        0 |
+|   15 | Nikhil Jain  | IT         |  47000 |        1 |
++------+--------------+------------+--------+----------+
+7 rows in set (0.00 sec)
+
+mysql> delete from employees where not department = "it";
+Query OK, 2 rows affected (0.02 sec)
+
+mysql> select * from employees;
++------+--------------+------------+--------+----------+
+| id   | name         | department | salary | isactive |
++------+--------------+------------+--------+----------+
+|    1 | Rahul Sharma | IT         |  50000 |        1 |
+|    4 | Sneha Patel  | IT         |  35000 |        1 |
+|    7 | Kiran Rao    | IT         |  60000 |        1 |
+|   13 | Arjun Reddy  | IT         |  55000 |        0 |
+|   15 | Nikhil Jain  | IT         |  47000 |        1 |
++------+--------------+------------+--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> update employees set salary =salary + 2000 where department = "it" and isactive = 1;
+Query OK, 4 rows affected (0.03 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from employees;
++------+--------------+------------+--------+----------+
+| id   | name         | department | salary | isactive |
++------+--------------+------------+--------+----------+
+|    1 | Rahul Sharma | IT         |  52000 |        1 |
+|    4 | Sneha Patel  | IT         |  37000 |        1 |
+|    7 | Kiran Rao    | IT         |  62000 |        1 |
+|   13 | Arjun Reddy  | IT         |  55000 |        0 |
+|   15 | Nikhil Jain  | IT         |  49000 |        1 |
++------+--------------+------------+--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create database da5;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> CREATE TABLE Projects (
+    ->    id INT,
+    ->    name VARCHAR(100),
+    ->    assignedto VARCHAR(100),
+    ->    start DATE,
+    ->    end DATE
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> INSERT INTO Projects VALUES
+    -> (1, 'Website Revamp', 'Alice', '2024-01-15', '2024-03-01'),
+    -> (2, 'Mobile App', 'Bob', '2024-02-01', NULL),
+    -> (3, 'Data Migration', NULL, NULL, NULL),
+    -> (4, 'SEO Optimization', 'Eve', '2024-03-10', '2024-04-20'),
+    -> (5, 'Cloud Migration', NULL, '2024-03-15', NULL);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    3 | Data Migration   | NULL       | NULL       | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | Cloud Migration  | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+5 rows in set (0.02 sec)
+
+mysql> select * from projeects where assignedto is null;
+ERROR 1146 (42S02): Table 'da6.projeects' doesn't exist
+mysql> select * from projects where assignedto is null;
++------+-----------------+------------+------------+------+
+| id   | name            | assignedto | start      | end  |
++------+-----------------+------------+------------+------+
+|    3 | Data Migration  | NULL       | NULL       | NULL |
+|    5 | Cloud Migration | NULL       | 2024-03-15 | NULL |
++------+-----------------+------------+------------+------+
+2 rows in set (0.02 sec)
+
+mysql> slect * from projects where start is null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect * from projects where start is null' at line 1
+mysql> select * from projects where start is null;
++------+----------------+------------+-------+------+
+| id   | name           | assignedto | start | end  |
++------+----------------+------------+-------+------+
+|    3 | Data Migration | NULL       | NULL  | NULL |
++------+----------------+------------+-------+------+
+1 row in set (0.01 sec)
+
+mysql> select * from projects where end is not null;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
++------+------------------+------------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from projects where assignedto is not null;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
++------+------------------+------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update projects set assignedto ="mukesh" where assignedto = "null";
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select from * project;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from * project' at line 1
+mysql> select * from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    3 | Data Migration   | NULL       | NULL       | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | Cloud Migration  | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update projects set name ="frank" where assignedto is null;
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    3 | frank            | NULL       | NULL       | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | frank            | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update projects set start = curdate() where start is null;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | Mobile App       | Bob        | 2024-02-01 | NULL       |
+|    3 | frank            | NULL       | 2026-09-10 | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | frank            | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update projects set name ="completed" where end is null;
+Query OK, 3 rows affected (0.02 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | completed        | Bob        | 2024-02-01 | NULL       |
+|    3 | completed        | NULL       | 2026-09-10 | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
+|    5 | completed        | NULL       | 2024-03-15 | NULL       |
++------+------------------+------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from projects where assignedto is null;
+Query OK, 2 rows affected (0.02 sec)
+
+mysql> select * from projects;
++------+------------------+------------+------------+------------+
+| id   | name             | assignedto | start      | end        |
++------+------------------+------------+------------+------------+
+|    1 | Website Revamp   | Alice      | 2024-01-15 | 2024-03-01 |
+|    2 | completed        | Bob        | 2024-02-01 | NULL       |
+|    4 | SEO Optimization | Eve        | 2024-03-10 | 2024-04-20 |
++------+------------------+------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> delete from projects where start is null;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from projects where end is not null;
+Query OK, 2 rows affected (0.02 sec)
+
+mysql> select * from projects;
++------+-----------+------------+------------+------+
+| id   | name      | assignedto | start      | end  |
++------+-----------+------------+------------+------+
+|    2 | completed | Bob        | 2024-02-01 | NULL |
++------+-----------+------------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE Orders (
+    ->  id INT,
+    ->  customer_name VARCHAR(100),
+    ->  order_date DATE,
+    ->  total_amount DECIMAL(10,2)
+    ->  );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> -- STEP 2: Insert Records
+mysql> INSERT INTO Orders VALUES
+    ->  (1, 'Alice', '2024-03-01', 1500.00),
+    ->  (2, 'Bob', '2024-03-05', 450.00),
+    ->  (3, 'Charlie', '2024-03-10', 2500.00),
+    ->  (4, 'Diana', '2024-03-15', 800.00),
+    ->  (5, 'Eve', '2024-03-20', 1200.00),
+    ->  (6, 'Frank', '2024-03-25', 3000.00),
+    ->  (7, 'Grace', '2024-04-02', 1800.00),
+    ->  (8, 'Henry', '2024-04-08', 950.00),
+    ->  (9, 'Ivy', '2024-04-12', 2750.00),
+    ->  (10, 'Jack', '2024-04-18', 650.00),
+    ->  (11, 'Kevin', '2024-04-22', 4200.00),
+    ->  (12, 'Lily', '2024-05-01', 1350.00),
+    ->  (13, 'Michael', '2024-05-08', 5000.00),
+    ->  (14, 'Nancy', '2024-05-15', 2250.00),
+    ->  (15, 'Oliver', '2024-05-25', 900.00);
+Query OK, 15 rows affected (0.02 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select * from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1500.00 |
+|    2 | Bob           | 2024-03-05 |       450.00 |
+|    3 | Charlie       | 2024-03-10 |      2500.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1200.00 |
+|    6 | Frank         | 2024-03-25 |      3000.00 |
+|    7 | Grace         | 2024-04-02 |      1800.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      2750.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4200.00 |
+|   12 | Lily          | 2024-05-01 |      1350.00 |
+|   13 | Michael       | 2024-05-08 |      5000.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+15 rows in set (0.00 sec)
+
+mysql> select * from orders where order_date betweeen "2024-03-03" and "2024-03-10
+    "> ^C
+mysql> select * from orders where order_date betweeen "2024-03-03" and "2024-03-10";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'betweeen "2024-03-03" and "2024-03-10"' at line 1
+mysql> select * from orders where order_date between "2024-03-03" and "2024-03-10";
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    2 | Bob           | 2024-03-05 |       450.00 |
+|    3 | Charlie       | 2024-03-10 |      2500.00 |
++------+---------------+------------+--------------+
+2 rows in set (0.02 sec)
+
+mysql> select * from order where order_date between "2024-04-01" and "2024-04-30";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order where order_date between "2024-04-01" and "2024-04-30"' at line 1
+mysql> select * from orders where order_date between "2024-04-01" and "2024-04-30";
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    7 | Grace         | 2024-04-02 |      1800.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      2750.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4200.00 |
++------+---------------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from orders where total_amount between 500 and 1500;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1500.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1200.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   12 | Lily          | 2024-05-01 |      1350.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from orders where total_amount=total_amount+1000 between "2024-03-04" and "2024-03-10";
+Empty set, 30 warnings (0.02 sec)
+
+mysql> update orders set  total_amount=total_amount+1000 where oder_date between "2024-03-04" and "2024-03-10";
+ERROR 1054 (42S22): Unknown column 'oder_date' in 'where clause'
+mysql> update orders set  total_amount=total_amount+1000 where order_date between "2024-03-04" and "2024-03-10";
+Query OK, 2 rows affected (0.02 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1500.00 |
+|    2 | Bob           | 2024-03-05 |      1450.00 |
+|    3 | Charlie       | 2024-03-10 |      3500.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1200.00 |
+|    6 | Frank         | 2024-03-25 |      3000.00 |
+|    7 | Grace         | 2024-04-02 |      1800.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      2750.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4200.00 |
+|   12 | Lily          | 2024-05-01 |      1350.00 |
+|   13 | Michael       | 2024-05-08 |      5000.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+15 rows in set (0.00 sec)
+
+mysql> update orders set total_amount = total_amount - 200 where total_amount between 1000 and 2000;
+Query OK, 5 rows affected (0.02 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1300.00 |
+|    2 | Bob           | 2024-03-05 |      1250.00 |
+|    3 | Charlie       | 2024-03-10 |      3500.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1000.00 |
+|    6 | Frank         | 2024-03-25 |      3000.00 |
+|    7 | Grace         | 2024-04-02 |      1600.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      2750.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4200.00 |
+|   12 | Lily          | 2024-05-01 |      1150.00 |
+|   13 | Michael       | 2024-05-08 |      5000.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+15 rows in set (0.00 sec)
+
+mysql> update orders set  total_amount=total_amount+(total_amount * 0.10) where total_amount between 2500 and 5000;
+Query OK, 5 rows affected (0.02 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1300.00 |
+|    2 | Bob           | 2024-03-05 |      1250.00 |
+|    3 | Charlie       | 2024-03-10 |      3850.00 |
+|    4 | Diana         | 2024-03-15 |       800.00 |
+|    5 | Eve           | 2024-03-20 |      1000.00 |
+|    6 | Frank         | 2024-03-25 |      3300.00 |
+|    7 | Grace         | 2024-04-02 |      1600.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      3025.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4620.00 |
+|   12 | Lily          | 2024-05-01 |      1150.00 |
+|   13 | Michael       | 2024-05-08 |      5500.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+15 rows in set (0.00 sec)
+
+mysql> delete from orders where order_date between "2024-03-10" and "2024-03-20";
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> select * from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1300.00 |
+|    2 | Bob           | 2024-03-05 |      1250.00 |
+|    6 | Frank         | 2024-03-25 |      3300.00 |
+|    7 | Grace         | 2024-04-02 |      1600.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|    9 | Ivy           | 2024-04-12 |      3025.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   11 | Kevin         | 2024-04-22 |      4620.00 |
+|   12 | Lily          | 2024-05-01 |      1150.00 |
+|   13 | Michael       | 2024-05-08 |      5500.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+12 rows in set (0.00 sec)
+
+mysql> delete from orders where total_amount between 2500 and 5000;
+Query OK, 3 rows affected (0.02 sec)
+
+mysql> select * from orders;
++------+---------------+------------+--------------+
+| id   | customer_name | order_date | total_amount |
++------+---------------+------------+--------------+
+|    1 | Alice         | 2024-03-01 |      1300.00 |
+|    2 | Bob           | 2024-03-05 |      1250.00 |
+|    7 | Grace         | 2024-04-02 |      1600.00 |
+|    8 | Henry         | 2024-04-08 |       950.00 |
+|   10 | Jack          | 2024-04-18 |       650.00 |
+|   12 | Lily          | 2024-05-01 |      1150.00 |
+|   13 | Michael       | 2024-05-08 |      5500.00 |
+|   14 | Nancy         | 2024-05-15 |      2250.00 |
+|   15 | Oliver        | 2024-05-25 |       900.00 |
++------+---------------+------------+--------------+
+9 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Emp (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  dept VARCHAR(20),
+    ->  salary INT
+    ->  );
+ERROR 1050 (42S01): Table 'emp' already exists
+mysql>
+mysql> -- STEP 2: Insert Records
+mysql> INSERT INTO Emp VALUES
+    ->  (1, 'Alice', 'HR', 35000),
+    ->  (2, 'Bob', 'IT', 50000),
+    ->  (3, 'Charlie', 'Finance', 45000),
+    ->  (4, 'Diana', 'Marketing', 40000),
+    ->  (5, 'Eve', 'IT', 55000),
+    ->  (6, 'Frank', 'Finance', 48000),
+    ->  (7, 'Grace', 'Sales', 37000),
+    ->  (8, 'Henry', 'Admin', 42000),
+    ->  (9, 'Ivy', 'HR', 39000),
+    ->  (10, 'Jack', 'Sales', 46000),
+    ->  (11, 'Kevin', 'IT', 60000),
+    ->  (12, 'Lily', 'Marketing', 41000),
+    ->  (13, 'Michael', 'Admin', 38000),
+    ->  (14, 'Nancy', 'Finance', 52000),
+    ->  (15, 'Oliver', 'HR', 43000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql> SELECT*FROM EMP;
+Empty set (0.03 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_da6 |
++---------------+
+| emp           |
+| employees     |
+| orders        |
+| products      |
+| projects      |
+| studentscores |
++---------------+
+6 rows in set (0.01 sec)
+
+mysql> drop table emp;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_da6 |
++---------------+
+| employees     |
+| orders        |
+| products      |
+| projects      |
+| studentscores |
++---------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Emp (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  dept VARCHAR(20),
+    ->  salary INT
+    ->  );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> -- STEP 2: Insert Records
+mysql> INSERT INTO Emp VALUES
+    ->  (1, 'Alice', 'HR', 35000),
+    ->  (2, 'Bob', 'IT', 50000),
+    ->  (3, 'Charlie', 'Finance', 45000),
+    ->  (4, 'Diana', 'Marketing', 40000),
+    ->  (5, 'Eve', 'IT', 55000),
+    ->  (6, 'Frank', 'Finance', 48000),
+    ->  (7, 'Grace', 'Sales', 37000),
+    ->  (8, 'Henry', 'Admin', 42000),
+    ->  (9, 'Ivy', 'HR', 39000),
+    ->  (10, 'Jack', 'Sales', 46000),
+    ->  (11, 'Kevin', 'IT', 60000),
+    ->  (12, 'Lily', 'Marketing', 41000),
+    ->  (13, 'Michael', 'Admin', 38000),
+    ->  (14, 'Nancy', 'Finance', 52000),
+    ->  (15, 'Oliver', 'HR', 43000);
+Query OK, 15 rows affected (0.00 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> SELECT*FROM EMP;
++------+---------+-----------+--------+
+| id   | name    | dept      | salary |
++------+---------+-----------+--------+
+|    1 | Alice   | HR        |  35000 |
+|    2 | Bob     | IT        |  50000 |
+|    3 | Charlie | Finance   |  45000 |
+|    4 | Diana   | Marketing |  40000 |
+|    5 | Eve     | IT        |  55000 |
+|    6 | Frank   | Finance   |  48000 |
+|    7 | Grace   | Sales     |  37000 |
+|    8 | Henry   | Admin     |  42000 |
+|    9 | Ivy     | HR        |  39000 |
+|   10 | Jack    | Sales     |  46000 |
+|   11 | Kevin   | IT        |  60000 |
+|   12 | Lily    | Marketing |  41000 |
+|   13 | Michael | Admin     |  38000 |
+|   14 | Nancy   | Finance   |  52000 |
+|   15 | Oliver  | HR        |  43000 |
++------+---------+-----------+--------+
+15 rows in set (0.00 sec)
+
+mysql> slect * from emp where dept in ("finance","it");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect * from emp where dept in ("finance","it")' at line 1
+mysql> slect * from emp where dept in("finance","it");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect * from emp where dept in("finance","it")' at line 1
+mysql> select * from emp where dept in("finance","it");
++------+---------+---------+--------+
+| id   | name    | dept    | salary |
++------+---------+---------+--------+
+|    2 | Bob     | IT      |  50000 |
+|    3 | Charlie | Finance |  45000 |
+|    5 | Eve     | IT      |  55000 |
+|    6 | Frank   | Finance |  48000 |
+|   11 | Kevin   | IT      |  60000 |
+|   14 | Nancy   | Finance |  52000 |
++------+---------+---------+--------+
+6 rows in set (0.01 sec)
+
+mysql> select * from emp update salary = salary+2000 where dept in("hr","marketing");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'update salary = salary+2000 where dept in("hr","marketing")' at line 1
+mysql> update emp set salary = salary+2000 where dept in("hr","marketing");
+Query OK, 5 rows affected (0.02 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from emp ;
++------+---------+-----------+--------+
+| id   | name    | dept      | salary |
++------+---------+-----------+--------+
+|    1 | Alice   | HR        |  37000 |
+|    2 | Bob     | IT        |  50000 |
+|    3 | Charlie | Finance   |  45000 |
+|    4 | Diana   | Marketing |  42000 |
+|    5 | Eve     | IT        |  55000 |
+|    6 | Frank   | Finance   |  48000 |
+|    7 | Grace   | Sales     |  37000 |
+|    8 | Henry   | Admin     |  42000 |
+|    9 | Ivy     | HR        |  41000 |
+|   10 | Jack    | Sales     |  46000 |
+|   11 | Kevin   | IT        |  60000 |
+|   12 | Lily    | Marketing |  43000 |
+|   13 | Michael | Admin     |  38000 |
+|   14 | Nancy   | Finance   |  52000 |
+|   15 | Oliver  | HR        |  45000 |
++------+---------+-----------+--------+
+15 rows in set (0.00 sec)
+
+mysql> delete where dept in ("finance",marketing");
+    "> ^C
+mysql> delete from emp where dept in ("finance",marketing");
+    "> ^C
+mysql> delete from emp where dept in ("finance","marketing");
+Query OK, 5 rows affected (0.02 sec)
+
+mysql> select * from emp ;
++------+---------+-------+--------+
+| id   | name    | dept  | salary |
++------+---------+-------+--------+
+|    1 | Alice   | HR    |  37000 |
+|    2 | Bob     | IT    |  50000 |
+|    5 | Eve     | IT    |  55000 |
+|    7 | Grace   | Sales |  37000 |
+|    8 | Henry   | Admin |  42000 |
+|    9 | Ivy     | HR    |  41000 |
+|   10 | Jack    | Sales |  46000 |
+|   11 | Kevin   | IT    |  60000 |
+|   13 | Michael | Admin |  38000 |
+|   15 | Oliver  | HR    |  45000 |
++------+---------+-------+--------+
+10 rows in set (0.00 sec)
+
+mysql> CREATE TABLE employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(30),
+    ->     salary DECIMAL(10,2),
+    ->     experience INT,
+    ->     age INT
+    -> );
+ERROR 1050 (42S01): Table 'employees' already exists
+mysql>
+mysql> INSERT INTO employees VALUES
+    -> (101,'Ravi','IT',65000,5,28),
+    -> (102,'Priya','HR',45000,2,24),
+    -> (103,'Amit','Finance',75000,8,35),
+    -> (104,'Sneha','IT',55000,3,27),
+    -> (105,'Rahul','Sales',40000,1,22),
+    -> (106,'Kiran','Finance',90000,12,40),
+    -> (107,'Anjali','HR',52000,4,29),
+    -> (108,'Suresh','Sales',68000,7,33);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> show tables;
++---------------+
+| Tables_in_da6 |
++---------------+
+| emp           |
+| employees     |
+| orders        |
+| products      |
+| projects      |
+| studentscores |
++---------------+
+6 rows in set (0.00 sec)
+
+mysql> drop table employees;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(50),
+    ->     department VARCHAR(30),
+    ->     salary DECIMAL(10,2),
+    ->     experience INT,
+    ->     age INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> INSERT INTO employees VALUES
+    -> (101,'Ravi','IT',65000,5,28),
+    -> (102,'Priya','HR',45000,2,24),
+    -> (103,'Amit','Finance',75000,8,35),
+    -> (104,'Sneha','IT',55000,3,27),
+    -> (105,'Rahul','Sales',40000,1,22),
+    -> (106,'Kiran','Finance',90000,12,40),
+    -> (107,'Anjali','HR',52000,4,29),
+    -> (108,'Suresh','Sales',68000,7,33);
+Query OK, 8 rows affected (0.02 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+----------+------------+----------+------------+------+
+| emp_id | emp_name | department | salary   | experience | age  |
++--------+----------+------------+----------+------------+------+
+|    101 | Ravi     | IT         | 65000.00 |          5 |   28 |
+|    102 | Priya    | HR         | 45000.00 |          2 |   24 |
+|    103 | Amit     | Finance    | 75000.00 |          8 |   35 |
+|    104 | Sneha    | IT         | 55000.00 |          3 |   27 |
+|    105 | Rahul    | Sales      | 40000.00 |          1 |   22 |
+|    106 | Kiran    | Finance    | 90000.00 |         12 |   40 |
+|    107 | Anjali   | HR         | 52000.00 |          4 |   29 |
+|    108 | Suresh   | Sales      | 68000.00 |          7 |   33 |
++--------+----------+------------+----------+------------+------+
+8 rows in set (0.00 sec)
+
+mysql> select emp_name,
+    -> salary,
+    -> case
+    -> when salary >= 80000 then "high salary"
+    -> when salary >= 60000 then "medium salary"
+    -> else "low salary"
+    -> end as salary_category
+    -> from employees;
++----------+----------+-----------------+
+| emp_name | salary   | salary_category |
++----------+----------+-----------------+
+| Ravi     | 65000.00 | medium salary   |
+| Priya    | 45000.00 | low salary      |
+| Amit     | 75000.00 | medium salary   |
+| Sneha    | 55000.00 | low salary      |
+| Rahul    | 40000.00 | low salary      |
+| Kiran    | 90000.00 | high salary     |
+| Anjali   | 52000.00 | low salary      |
+| Suresh   | 68000.00 | medium salary   |
++----------+----------+-----------------+
+8 rows in set (0.01 sec)
+
+mysql> select emp_name,
+    -> experience,
+    -> case
+    -> when experience >= 10 then "expert"
+    -> when experience >= 5 then "senior"
+    -> when experience >= 2 then "junior"
+    -> else "fresher"
+    -> end as experience_category
+    -> from employees;
++----------+------------+---------------------+
+| emp_name | experience | experience_category |
++----------+------------+---------------------+
+| Ravi     |          5 | senior              |
+| Priya    |          2 | junior              |
+| Amit     |          8 | senior              |
+| Sneha    |          3 | junior              |
+| Rahul    |          1 | fresher             |
+| Kiran    |         12 | expert              |
+| Anjali   |          4 | junior              |
+| Suresh   |          7 | senior              |
++----------+------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql>
