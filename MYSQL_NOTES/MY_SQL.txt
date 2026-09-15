@@ -1,0 +1,298 @@
+MYSQL[20 DAYS]
+==================================
+what is data ?
+--------------------
+raw facts or figure without context
+example :101,malli,50000,hyd
+
+what is field ?
+--------------------------
+smallest unit of data in data base (column/attributes)
+ex : ename,esalary,eaddress
+
+what is record ?
+----------------------------
+collection of related fields (rows / tuple)
+ex : (101,"sunny",5000)
+
+what is database ?
+-------------------------------
+organised collection of related records stored together
+ex : an employee database contains all employee record
+
+client-server-arch ?
+--------------------------------
+client   :  the role of the client in client - server arch is to send request to the server and to get
+            response from the server
+
+server   : server is a software the role of the server in client - server arch is to take request from the clients.
+           if the request is valid request it will generates some response and we can handover that response to client.
+           if the client request is not valid request it will raise some error status codes.
+
+protocol : it has a set of rules and regulations . in the role of the protocol in client-server arch is to send request from client to server
+ 
+
+
+Identifiers
+====================
+a -z , A -Z, 0 - 9, _ , #
+IDENTIFIERS SHOULD NOT START WITH DIGITS
+SPACES ARE NOT CONSIDERED TO DECLARE IDENTIFIERS
+RESERVE WORDS NOT CONSIDER TO DECLARE IDENTIFIERS
+MAX LENGTH TO DECLARE IDENTIFIERS IS 15
+
+SQL(STRUCTURED QUERY LANGUAGE)
+===========================================================
+--> STRUCTURED QUERY LANGUAGE (SQL) IS A STANDARD PROGRAMMING LANGUAGE SPECIALLY DESIGNED FOR MANAGING AND MANIPULATING RELATIONAL DATA BASE . IT PROVIDES A DECLARATIVE SYNTAX
+    THAT ALLOWS USER TO DEFINED WHAT DATA THEY WANT RETRIVE , INSERT ,UPDATE OR DELETE WITHOUT SPECIFYING EXACTLY HOW DATABASE SHOULD EXCUTE THESSE OPERATIONS.
+SQL COMMANDS
+=====================
+DDL : DATA DEFINITION LANGUAGE
+------------------------------
+DEFINES AND MODIFIES THE STRUCTURE OF DATABASE OBJECTS(TABLES , SCHEMES ,INDEX)
+
+DCL : DATA CONTROL LANGUAGE
+---------------------------
+MANAGES PERMISSION AND ACCESS CONTROL ON DATA BASE
+
+-------------------------------------------------------------------------------------4/09
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.05 sec)
+
+mysql> CREATE DATABASE PFS6;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| pfs6               |
+| sys                |
++--------------------+
+5 rows in set (0.02 sec)
+
+mysql> CREATE DATABASE MUKESH;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mukesh             |
+| mysql              |
+| performance_schema |
+| pfs6               |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> DROP DATABASE PF6;
+ERROR 1008 (HY000): Can't drop database 'pf6'; database doesn't exist
+mysql> DROP DATABASE pfs6;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mukesh             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW DATABASSES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABASSES' at line 1
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mukesh             |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE PFS6;
+Database changed
+mysql> CREATE TABLE EMPLOYEES(
+    -> EMPID CHAR(5),
+    -> FNAME VARCHAR(100),
+    -> LNAME VARCHAR(70),
+    -> AGE INT,
+    -> DOJ DATE,
+    -> ADDRESS TINYTEXT,
+    -> DEPT VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC EMPLOYEES;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| EMPID   | char(5)      | YES  |     | NULL    |       |
+| FNAME   | varchar(100) | YES  |     | NULL    |       |
+| LNAME   | varchar(70)  | YES  |     | NULL    |       |
+| AGE     | int          | YES  |     | NULL    |       |
+| DOJ     | date         | YES  |     | NULL    |       |
+| ADDRESS | tinytext     | YES  |     | NULL    |       |
+| DEPT    | varchar(20)  | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.04 sec)
+
+mysql> SHOW COLUMNS FROM EMPLOYEES;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| EMPID   | char(5)      | YES  |     | NULL    |       |
+| FNAME   | varchar(100) | YES  |     | NULL    |       |
+| LNAME   | varchar(70)  | YES  |     | NULL    |       |
+| AGE     | int          | YES  |     | NULL    |       |
+| DOJ     | date         | YES  |     | NULL    |       |
+| ADDRESS | tinytext     | YES  |     | NULL    |       |
+| DEPT    | varchar(20)  | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+
+ERROR 1146 (42S02): Table 'pfs6.employess' doesn't exist
+mysql> -- MODIFY THE FNAME COLUMN IN EMPLOYESS TABLE TO VARCHAR(70)
+mysql> -- SYNTAX : ALTER TABLE TABLE-NAME MODIFY COLUMN - NAME DATATYPE SIZE
+mysql> ALTER TABLE EMPLOYEES MODIFY FNAME VARCHAR(70);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EMPID   | char(5)     | YES  |     | NULL    |       |
+| FNAME   | varchar(70) | YES  |     | NULL    |       |
+| LNAME   | varchar(70) | YES  |     | NULL    |       |
+| AGE     | int         | YES  |     | NULL    |       |
+| DOJ     | date        | YES  |     | NULL    |       |
+| ADDRESS | tinytext    | YES  |     | NULL    |       |
+| DEPT    | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> -- ADD A NEW COLUMN NAMED WITH LOCATION TO EMPLOYESS TABLE
+mysql> -- SYNTAX : ALTER THE TEABLE TABLE-NAME ADD COLUMN-NAME DATATYPE(SIZE)
+mysql> ALTER TABLE EMPLOYEES ADD LOCATION TINYTEXT;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMPID    | char(5)     | YES  |     | NULL    |       |
+| FNAME    | varchar(70) | YES  |     | NULL    |       |
+| LNAME    | varchar(70) | YES  |     | NULL    |       |
+| AGE      | int         | YES  |     | NULL    |       |
+| DOJ      | date        | YES  |     | NULL    |       |
+| ADDRESS  | tinytext    | YES  |     | NULL    |       |
+| DEPT     | varchar(20) | YES  |     | NULL    |       |
+| LOCATION | tinytext    | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+
+----------------------------------------------------------------------------------------------05/09
+1.DROP
+----------
+--> REMOVES THE TABLE OR OBJECT
+-->TABLE STRUCTURE + DATA
+-->PERFORMANCE IS SLOW (DUE TO FULL REMOVAL)
+
+2.DELETE
+--------------
+-->REMOVES SPECIFIC ROWS FROM A TABLE
+-->SPECIFIC ROWS (BASED ON CONDITIONS)
+-->TABLE STRUCTURE INTACT
+-->PERFORMANCE IS SLOWER (ROW-BY-ROW)
+
+3.TRUNCATE
+------------------
+-->REMOVES ALL ROWS ,KEEP STRUCTURE
+-->ALL ROWS
+-->TABLE STRUCTURE INTACT
+-->PERFORMANCE IS FAST(BULK DELETION)
+
+---------------------------------------------------------------7/09
+INTEGRITY CONSTRIANTS
+================================================
+1 .NOT NULL
+2 .UNIQUE
+3 .PRIMARY KEY
+4 .COMPOSITE KEY
+5 .FOREIGN KEY
+6 .DEFAULT
+7 .CHECK
+
+REFERENTIAL ACTIONS
+============================================
+REFERENTIAL ACTIONS DEFINE WHAT HAPPENS TO CHILD TABLE DATA WHEN PARENT TABLE DATA IS UPDATED OR DELETED
+
+ON DELETE CASCADE ,ON UPDATE CASCADE
+
+ON DELETE SET NULL,ON UPDATE SET NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
